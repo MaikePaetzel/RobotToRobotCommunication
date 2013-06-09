@@ -1,6 +1,7 @@
-/**
- * Diese Klasse ist eine Hilfsklasse für die Erstellung eines XML-Files. 
- * Sie liest die Referenzdaten nicht aus einem XML-File sondern aus einem Ordner ein.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:12 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.infrastructure;
@@ -22,6 +23,10 @@ import com.bachelorthesis.main.Sprachauswertung;
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 import com.bachelorthesis.main.VirtualAudioStream;
 
+/**
+ * Diese Klasse ist eine Hilfsklasse für die Erstellung eines XML-Files.
+ * Sie liest die Referenzdaten nicht aus einem XML-File sondern aus einem Ordner ein.
+ */
 public class ReadReferenceFromAudioFile {
 	
 	private StartUpFilePathConfiguration config;
@@ -68,8 +73,8 @@ public class ReadReferenceFromAudioFile {
 		File[] filearray = getAllFiles(config.getDictionary());
 		for(File f: filearray)
 		{
-			VirtualAudioStream virtuali = new VirtualAudioStream(f.getAbsolutePath(), Config.defaultWindowSize, true);
-			result.put(f.getName(), virtuali.getFullStream());
+			VirtualAudioStream virtualAudioStream = new VirtualAudioStream(f.getAbsolutePath(), Config.defaultWindowSize, true);
+			result.put(f.getName(), virtualAudioStream.getFullStream());
 		}
 
 		
@@ -84,7 +89,7 @@ public class ReadReferenceFromAudioFile {
 	private File[] getAllFiles(String path)
 	{
 		File f = new File(path);
-		File[] fileArray = f.listFiles(new FilenameFilter() {         
+		File[] fileArray = f.listFiles(new FilenameFilter() {
 	            public boolean accept(File dir, String name) {
 	                return name.endsWith("wav");
 	            }

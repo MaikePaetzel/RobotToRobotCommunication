@@ -1,6 +1,7 @@
-/**
- * Diese Klasse liest ein XML-File ein und schreibt das Ergebnis in eine
- * Map<String, Vector> zurück.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:12 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.infrastructure;
@@ -22,18 +23,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
- 
+
+/**
+ * Diese Klasse liest ein XML-File ein und schreibt das Ergebnis in eine
+ * Map<String, Vector> zurück.
+ */
 public class ReadXML {
-	
-	private File file;
-	private DocumentBuilderFactory dbFactory;
-	private DocumentBuilder dBuilder;
-	private Document doc;
+
+    private Document doc;
 	
 	public ReadXML(StartUpFilePathConfiguration config) throws ParserConfigurationException, SAXException, IOException {
-		file = new File(config.getXML());
-		dbFactory = DocumentBuilderFactory.newInstance();
-		dBuilder = dbFactory.newDocumentBuilder();
+        File file = new File(config.getXML());
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
 		doc.getDocumentElement().normalize();
 	}
@@ -45,13 +47,13 @@ public class ReadXML {
 	 */
 	public Map<String,Vector<double[]>> getContent()
 	{
-		Map<String,Vector<double[]>> mau = new HashMap<String,Vector<double[]>>();
+		Map<String,Vector<double[]>> referenzdaten = new HashMap<String,Vector<double[]>>();
 		NodeList dateien = doc.getElementsByTagName("datei");
 		for (int i=0; i <dateien.getLength(); i++)
 		{
 			Node node = dateien.item(i);
 			NodeList arrays = node.getChildNodes();
-			Vector<double[]> viki = new Vector<double[]>();
+			Vector<double[]> vector = new Vector<double[]>();
 			
 			for (int j=0; j < arrays.getLength(); j++)
 			{
@@ -65,16 +67,16 @@ public class ReadXML {
 					signalparameter[z] = Double.parseDouble(node3.getTextContent());
 				}
 				
-				viki.add(signalparameter);	
+				vector.add(signalparameter);
 			}
 			
 			NamedNodeMap attr = node.getAttributes();
 		    Node nodeAttr = attr.getNamedItem("name");
 		    String[] temp2 = nodeAttr.toString().split("\"");
-			mau.put(temp2[1].toString(), viki);		
+			referenzdaten.put(temp2[1], vector);
 		}
 
-		return mau;
+		return referenzdaten;
 	}
 
 	

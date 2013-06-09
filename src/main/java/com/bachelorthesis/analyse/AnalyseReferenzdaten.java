@@ -1,6 +1,7 @@
-/**
- * Diese Klasse analysiert von einem Referenzdatensatz entweder die Distanzen
- * gegenüber dem eigenen Datensatz oder gegenüber einem anderen Datensatz.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:24 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.analyse;
@@ -18,6 +19,10 @@ import com.bachelorthesis.main.Load;
 import com.bachelorthesis.main.Sprachauswertung;
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 
+/**
+ * Diese Klasse analysiert von einem Referenzdatensatz entweder die Distanzen
+ * gegenüber dem eigenen Datensatz oder gegenüber einem anderen Datensatz.
+ */
 public class AnalyseReferenzdaten {
 	
 	private StartUpFilePathConfiguration config;
@@ -34,24 +39,23 @@ public class AnalyseReferenzdaten {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	public void testDistanceMatrixAgainsSelf() throws UnsupportedAudioFileException, IOException, ParserConfigurationException, SAXException
+	public void testDistanceMatrixAgainstSelf() throws UnsupportedAudioFileException, IOException, ParserConfigurationException, SAXException
 	{
 		Load loader = new Load(config);
-		Map<String, Vector<double[]>> map1= loader.getInput();
-		Map<String, Vector<double[]>> map2= loader.getInput();
+		Map<String, Vector<double[]>> map1 = loader.getInput();
+		Map<String, Vector<double[]>> map2 = loader.getInput();
 		Sprachauswertung sprache = new Sprachauswertung();
 
 		int i = 0;
-		int j = 0;
 		double[][] matrix = new double[14][14];
 		for(String s: map1.keySet())
 		{
-			j = 0;
-			Vector<double[]> victor1 = map1.get(s);
+            int j = 0;
+			Vector<double[]> vector1 = map1.get(s);
 			for(String p: map2.keySet())
 			{
-				Vector<double[]> victor2 = map2.get(p);
-				double result = sprache.getVectorDistance(victor1, victor2);
+				Vector<double[]> vector2 = map2.get(p);
+				double result = sprache.getVectorDistance(vector1, vector2);
 				matrix[i][j] = Math.round(result*10)/10.0;
 				j++;
 			}
@@ -80,16 +84,15 @@ public class AnalyseReferenzdaten {
 		Sprachauswertung sprache = new Sprachauswertung();
 
 		int i = 0;
-		int j = 0;
 		double[][] matrix = new double[14][14];
 		for(String s: map1.keySet())
 		{
-			j = 0;
-			Vector<double[]> victor1 = map1.get(s);
+            int j = 0;
+			Vector<double[]> vector1 = map1.get(s);
 			for(String p: map2.keySet())
 			{
-				Vector<double[]> victor2 = map2.get(p);
-				double result = sprache.getVectorDistance(victor1, victor2);
+				Vector<double[]> vector2 = map2.get(p);
+				double result = sprache.getVectorDistance(vector1, vector2);
 				matrix[i][j] = Math.round(result*10)/10.0;
 				j++;
 			}

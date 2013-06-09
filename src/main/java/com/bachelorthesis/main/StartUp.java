@@ -1,6 +1,7 @@
-/**
- * Diese Klasse bietet die Möglichkeit, über die Konsole verschiedene Analysen,
- * die in der Bachelorarbeit beschrieben wurden, selbst durchzuführen.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:05 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
@@ -16,6 +17,10 @@ import com.bachelorthesis.analyse.AnalyseReferenzdaten;
 import com.bachelorthesis.analyse.AnalyseStimmPitches;
 import com.bachelorthesis.analyse.AnalyseTestordner;
 
+/**
+ * Diese Klasse bietet die Möglichkeit, über die Konsole verschiedene Analysen,
+ * die in der Bachelorarbeit beschrieben wurden, selbst durchzuführen.
+ */
 public class StartUp {
 
 	/**
@@ -181,9 +186,9 @@ public class StartUp {
 	{
 		StartUpFilePathConfiguration config = new StartUpFilePathConfiguration();
 		config.setXml("/resources/eSpeak/referenzenESpeak.xml");
-		config.setPlaintext("/resources/eSeapk/plaintext.txt");
+		config.setPlaintext("/resources/eSpeak/plaintext.txt");
 		AnalyseReferenzdaten analyse = new AnalyseReferenzdaten(config);
-		analyse.testDistanceMatrixAgainsSelf();
+		analyse.testDistanceMatrixAgainstSelf();
 	}
 	
 	/**
@@ -200,7 +205,7 @@ public class StartUp {
 		config.setXml("/resources/Micro/referenzenMicrophon.xml");
 		config.setPlaintext("/resources/Micro/plaintext.txt");
 		AnalyseReferenzdaten analyse = new AnalyseReferenzdaten(config);
-		analyse.testDistanceMatrixAgainsSelf();
+		analyse.testDistanceMatrixAgainstSelf();
 	}
 	
 	/**
@@ -214,9 +219,10 @@ public class StartUp {
 	private static void szenario7() throws UnsupportedAudioFileException, IOException, ParserConfigurationException, SAXException
 	{
 		StartUpFilePathConfiguration config = new StartUpFilePathConfiguration();
-		config.setXml("/resources/Micro/urces/plaintext.txt");
-		
-		StartUpFilePathConfiguration config1 = new StartUpFilePathConfiguration();
+		config.setXml("/resources/Micro/referenzenMicrophon.xml");
+        config.setPlaintext("/resources/Micro/plaintext.txt");
+
+        StartUpFilePathConfiguration config1 = new StartUpFilePathConfiguration();
 		config1.setXml("/resources/eSpeak/referenzenESpeak.xml");
 		config1.setPlaintext("/resources/eSpeak/plaintext.txt");
 		

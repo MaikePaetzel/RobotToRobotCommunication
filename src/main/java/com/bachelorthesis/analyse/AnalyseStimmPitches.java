@@ -1,6 +1,7 @@
-/**
- * Diese Klasse führt eine Analyse durch, mit welchem Pitch ein eSpeakdatensatz
- * erzeugt wurde. Dies dient zur Erkennung, welcher Roboter gesprochen hat.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:22 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.analyse;
@@ -25,6 +26,10 @@ import com.bachelorthesis.main.ProgramEndedException;
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 import com.bachelorthesis.main.StateMachine;
 
+/**
+ * Diese Klasse führt eine Analyse durch, mit welchem Pitch ein eSpeakdatensatz
+ * erzeugt wurde. Dies dient zur Erkennung, welcher Roboter gesprochen hat.
+ */
 public class AnalyseStimmPitches {
 	
 	private StartUpFilePathConfiguration config;
@@ -66,9 +71,8 @@ public class AnalyseStimmPitches {
 			try{
 				machine.running();
 			}
-			catch(ProgramEndedException e)
-			{
-			}
+			catch(ProgramEndedException ignored){}
+
 			List<String> ist = machine.getAusgabe();
 			System.out.println("");
 			System.out.println("---------------------------------------------------------");
@@ -102,11 +106,10 @@ public class AnalyseStimmPitches {
 		}
 		
 		writeToFile("----------------------------");
-		 SimpleDateFormat formatter = new SimpleDateFormat(
-	                "yyyy.MM.dd - HH:mm:ss ");
-	        Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd - HH:mm:ss ");
+	    Date currentTime = new Date();
 	    writeToFile(formatter.format(currentTime)); 
-		writeToFile("Es wurden " + korrekt_erkannt/wortcounter + " Worte dem richtigen Roboter zugeordnet.");
+		writeToFile("Es wurden " + (korrekt_erkannt/(float)wortcounter)*100 + " Worte dem richtigen Roboter zugeordnet.");
 		writeToFile("Es wurden " + falsch_segmentiert + " Sätze falsch segmentiert.");
 	}
 	
@@ -131,16 +134,15 @@ public class AnalyseStimmPitches {
 	 */
 	private void writeToFile(String s) {
 		try{
-			  // Create file 
-			  FileWriter fstream = new FileWriter("resources/Testergebnis/ausgabe.txt", true);
-			  BufferedWriter out = new BufferedWriter(fstream);
-			  out.write(s + "\n");
-			  //Close the output stream
-			  out.close();
-			  }catch (Exception e){//Catch exception if any
-			  System.err.println("Error: " + e.getMessage());
-			  }
-		
+            // Create file
+            FileWriter fstream = new FileWriter("resources/Testergebnis/ausgabe.txt", true);
+            BufferedWriter out = new BufferedWriter(fstream);
+            out.write(s + "\n");
+            //Close the output stream
+            out.close();
+        }catch (Exception e){//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        }
 	}
 	
 	

@@ -1,5 +1,7 @@
-/**
- * Diese Klasse schreibt eine XML-Datei aus einem Vektor.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:11 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.infrastructure;
@@ -23,17 +25,18 @@ import org.xml.sax.SAXException;
 
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 
+/**
+ * Diese Klasse schreibt eine XML-Datei aus einem Vektor.
+ */
 public class WriteXML {
-		
-		private DocumentBuilderFactory docFactory;
-		private DocumentBuilder docBuilder;
-		private Document doc;
+
+        private Document doc;
 		private Element rootElement;
 		private StartUpFilePathConfiguration config;
 		
 		public WriteXML(StartUpFilePathConfiguration config) throws ParserConfigurationException, SAXException, IOException {
-			docFactory = DocumentBuilderFactory.newInstance();
-			docBuilder = docFactory.newDocumentBuilder();
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			doc = docBuilder.newDocument();
 			
 			rootElement = doc.createElement("root");

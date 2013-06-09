@@ -1,8 +1,17 @@
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:05 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
+ */
+
 package com.bachelorthesis.main;
 
 import java.io.File;
 import java.io.IOException;
 
+/*
+ * Diese Klasse stellt die dynamische Konfiguration der Pfade bereit
+ */
 public class StartUpFilePathConfiguration {
 
 		//Pfad zur ausführbaren JAR-Datei
@@ -16,7 +25,8 @@ public class StartUpFilePathConfiguration {
 		
 		//XML-File mit Referenzdaten
 		private String xml = null;
-		
+
+        // Textdatei mit Zuordnung Dateiname - Sprachinhalt
 		private String plaintext = null;
 		
 		//Einzelne zu analysierende Datei

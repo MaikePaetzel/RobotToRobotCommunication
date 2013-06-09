@@ -1,12 +1,11 @@
-/**
- * Diese Klasse ist die eigentliche Analyse, die für eine gegebene Menge an 
- * Sprachdaten ausgibt, welcher Text gesprochen wurde.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:07 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Vector;
@@ -18,15 +17,17 @@ import org.xml.sax.SAXException;
 
 import com.bachelorthesis.lib.MFCC;
 
-
+/**
+ * Diese Klasse ist die eigentliche Analyse, die für eine gegebene Menge an
+ * Sprachdaten ausgibt, welcher Text gesprochen wurde.
+ */
 public class Sprachauswertung {
 
 	
-	Map<String,Vector<double[]>> referenzen;
+	private Map<String,Vector<double[]>> referenzen;
 	private Map<String, String> contentfolder;
-	double minDistance;
-	String valueOfMinDist;
-	int wordCounter;
+	private double minDistance;
+	private String valueOfMinDist;
 
 	
 	public Sprachauswertung(StartUpFilePathConfiguration config) throws UnsupportedAudioFileException, IOException, ParserConfigurationException, SAXException {
@@ -35,7 +36,6 @@ public class Sprachauswertung {
 		contentfolder = loader.getContentfolder();
 		minDistance = Double.MAX_VALUE;
 		valueOfMinDist = "";
-		wordCounter  = 0;
 	}
 	
 	public Sprachauswertung() throws UnsupportedAudioFileException, IOException, ParserConfigurationException, SAXException {
@@ -81,14 +81,13 @@ public class Sprachauswertung {
 		
 		minDistance = Integer.MAX_VALUE;
 		valueOfMinDist = "";
-		wordCounter++;
-		
+
 		// Für jeden 32 wird das Minimum berechnet
 		for(int i = 0; i < Config.OVERHEAD; i+=32)
 		{
 			double[] temp = new double[length];
 			System.arraycopy(d, i, temp, 0, length);
-			computeMin(temp, i);
+			computeMin(temp);
 		}
 
 		//System.out.println(minDistance);
@@ -99,12 +98,12 @@ public class Sprachauswertung {
 	/**
 	 * Diese Methode berechnet für ein gegebenes Array den besten dazu passenden
 	 * Referenzdatensatz und prüft, ob dieser das globale Minimum bildet.
-	 * @param temp Eingabearray
-	 * @param i Anzahl der Verschiebung zu Analysezwecken
-	 * @throws UnsupportedAudioFileException
+	 *
+     * @param temp Eingabearray
+     * @throws UnsupportedAudioFileException
 	 * @throws IOException
 	 */
-	private void computeMin(double[] temp, int i) throws UnsupportedAudioFileException, IOException
+	private void computeMin(double[] temp) throws UnsupportedAudioFileException, IOException
 	{
 		Vector<double[]> toCheck = generateMelCepstrum(temp);
 	
@@ -112,7 +111,6 @@ public class Sprachauswertung {
 		{
 			double distance = getVectorDistance(toCheck, referenzen.get(s));
 	
-			writeToFile(i, distance, wordCounter, s);
 			if(distance < minDistance)
 			{
 				minDistance = distance;
@@ -125,7 +123,7 @@ public class Sprachauswertung {
 	/**
 	 * Ein gegebener Sampledatensatz wird hier in das Mel-Cepstrum umgerechnet
 	 * @param d
-	 * @return
+	 * @return Vector im Mel-Cepstrum
 	 * @throws UnsupportedAudioFileException
 	 * @throws IOException
 	 */
@@ -134,13 +132,13 @@ public class Sprachauswertung {
 		MFCC mel = new MFCC(Config.Sampling_Rate, Config.defaultWindowSize);
 		double[][] temp =  mel.process(d);
 		
-		Vector<double[]> viki = new Vector<double[]>();
+		Vector<double[]> vector = new Vector<double[]>();
 		
 		for(double[] s : temp)
 		{
-			viki.add(s);
+			vector.add(s);
 		}
-		return viki;
+		return vector;
 	}
 
 	/**
@@ -178,34 +176,4 @@ public class Sprachauswertung {
 		return distance;
 	}
 
-	/**
-	 * Diese Methode schreibt zu Analysezwecken etwas in eine Datei
-	 * @param x
-	 * @param distance
-	 * @param clazz
-	 * @param s
-	 */
-	private void writeToFile(int x, double distance, int clazz, String s) {
-		try{
-			  // Create file 
-			  FileWriter fstream = new FileWriter("resources/Output/out3.txt", true);
-			  BufferedWriter out = new BufferedWriter(fstream);
-			  out.write(x + ";" + distance + ";" + clazz + ";" + s + "\n");
-			  //Close the output stream
-			  out.close();
-			  }catch (Exception e){//Catch exception if any
-			  System.err.println("Error: " + e.getMessage());
-			  }
-		
-	}
-	
-	/**
-	 * Diese Methode gibt die Zuordnung des Dateinamens und der darin gesprochenen
-	 * Sprache zurück.
-	 * @return Zuordnung Dateiname - Spracheinabe
-	 */
-	public Map<String,String> getContentfolder()
-	{
-		return contentfolder;
-	}
 }

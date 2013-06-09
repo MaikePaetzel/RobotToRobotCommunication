@@ -1,6 +1,7 @@
-/** 
- * Diese Klasse filtert die Sprachdetektion der Energiewertbestimmung, so dass Ausreißer
- * in den Signalwerten nicht betrachtet werden.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:10 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
@@ -8,6 +9,10 @@ package com.bachelorthesis.main;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Diese Klasse filtert die Sprachdetektion der Energiewertbestimmung, so dass Ausreißer
+ * in den Signalwerten nicht betrachtet werden.
+ */
 public class Filter {
 	
 	

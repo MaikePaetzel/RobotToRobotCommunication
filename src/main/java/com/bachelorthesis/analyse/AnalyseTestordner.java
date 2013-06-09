@@ -1,5 +1,7 @@
-/**
- * Diese Klasse führt eine Sprachanalyse mit einem Ordner von Testdaten durch.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:14 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.analyse;
@@ -26,7 +28,9 @@ import com.bachelorthesis.main.ProgramEndedException;
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 import com.bachelorthesis.main.StateMachine;
 
-
+/**
+ * Diese Klasse führt eine Sprachanalyse mit einem Ordner von Testdaten durch.
+ */
 public class AnalyseTestordner {
 	
 	private Map<String, Integer> erfolg;
@@ -68,7 +72,7 @@ public class AnalyseTestordner {
 		for(File f : filearray)
 		{
 			Load loader = new Load(config);
-			Map<String,String>contentfolder1 = loader.loadFilenameToContentMap(config.getTestordnerPath() + "/plaintext.txt");
+			Map<String,String> contentfolder1 = loader.loadFilenameToContentMap(config.getTestordnerPath() + "/plaintext.txt");
 			String satz = contentfolder1.get(f.getName());
 			System.out.println("Starte Satzanalyse");
 			System.out.println("Soll-Satz: " + satz);
@@ -78,9 +82,8 @@ public class AnalyseTestordner {
 			try{
 				machine.running();
 			}
-			catch(ProgramEndedException e)
-			{
-			}
+			catch(ProgramEndedException ignored){}
+
 			List<String> ist = machine.getAusgabe();
 			System.out.println("");
 			System.out.println("Satzauswertung hat " + machine.getZeitDiff()/1000 + " Sekunden gedauert.");
@@ -129,9 +132,8 @@ public class AnalyseTestordner {
 	 */
 	private void generiereAusgabe() {
 		writeToFile("----------------------------");
-		 SimpleDateFormat formatter = new SimpleDateFormat(
-	                "yyyy.MM.dd - HH:mm:ss ");
-	        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd - HH:mm:ss ");
+        Date currentTime = new Date();
 	    writeToFile(formatter.format(currentTime)); 
 		
 		for(int i = 0; i < position.size(); i++)
@@ -147,8 +149,10 @@ public class AnalyseTestordner {
 				prozent = erfolg.get(entry) /(double)nummerncounter.get(entry)*100;
 			}
 			else
+            {
 				prozent = 100.0;
-			writeToFile(entry + ": " + prozent);
+            }
+            writeToFile(entry + ": " + prozent);
 		
 		}
 		writeToFile("Es wurden " + nummerncounter.get("Illegal") + " Sätze falsch segmentiert.");
@@ -169,7 +173,7 @@ public class AnalyseTestordner {
 			  //Close the output stream
 			  out.close();
 			  }catch (Exception e){//Catch exception if any
-			  System.err.println("Error: " + e.getMessage());
+			    System.err.println("Error: " + e.getMessage());
 			  }
 		
 	}
@@ -190,16 +194,9 @@ public class AnalyseTestordner {
 	 */
 	private void fillNummern()
 	{
-		nummerncounter.put("0.", 0);
-		nummerncounter.put("1.", 0);
-		nummerncounter.put("2.", 0);
-		nummerncounter.put("3.", 0);
-		nummerncounter.put("4.", 0);
-		nummerncounter.put("5.", 0);
-		nummerncounter.put("6.", 0);
-		nummerncounter.put("7.", 0);
-		nummerncounter.put("8.", 0);
-		nummerncounter.put("9.", 0);
+        for(int i=0; i <= 9; i++){
+            nummerncounter.put(i+".", 0);
+        }
 		nummerncounter.put("Distance.", 0);
 		nummerncounter.put("Meter.", 0);
 		nummerncounter.put("Point.", 0);
@@ -212,10 +209,12 @@ public class AnalyseTestordner {
 	 */
 	private void fillErfolg()
 	{
-		for(String s : nummerncounter.keySet())
-		{
-			erfolg.put(s, 0);
-		}
+        for(int i=0; i <= 9; i++){
+            erfolg.put(i+".", 0);
+        }
+        erfolg.put("Distance.", 0);
+        erfolg.put("Meter.", 0);
+        erfolg.put("Point.", 0);
 	}
 	
 	/**
@@ -254,7 +253,7 @@ public class AnalyseTestordner {
 		String[] zwischenspeicher = input.split(" ");
     	String meter = zwischenspeicher[1].trim();
     	try{
-    	return Float.parseFloat(meter);
+    	    return Float.parseFloat(meter);
     	}
     	catch(NumberFormatException e){
     		return 0;

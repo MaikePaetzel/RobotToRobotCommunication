@@ -1,8 +1,7 @@
-/**
- * Diese Klasse ist der Buffer unserer Audiodaten, der eine gewisse Menge bereits
- * eingelesener Samples speichert und in diesen interessante Punkte für eine
- * Spracheingabe markieren kann.
- * 
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:02 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
@@ -13,7 +12,12 @@ import java.util.List;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+/**
+ * Diese Klasse ist der Buffer unserer Audiodaten, der eine gewisse Menge bereits
+ * eingelesener Samples speichert und in diesen interessante Punkte für eine
+ * Spracheingabe markieren kann.
+ *
+ */
 public class StreamBuffer {
 	
 
@@ -22,7 +26,6 @@ public class StreamBuffer {
 	private int end_interesting;
 	private VirtualAudioStream virtualAudioStream;
 	private Energiewertbestimmung energie;
-	private int alreadyDeletedSamplesFromBuffer;
 	private long diff;
 	
 	public StreamBuffer(Energiewertbestimmung energy, String path) throws UnsupportedAudioFileException, IOException {
@@ -31,7 +34,6 @@ public class StreamBuffer {
 		end_interesting = -1;
 		virtualAudioStream = new VirtualAudioStream(path, Config.defaultWindowSize, true);
 		energie = energy;
-		alreadyDeletedSamplesFromBuffer = 0;
 		diff = 0;
 	}
 	
@@ -75,7 +77,6 @@ public class StreamBuffer {
 			{
 				while(buffer.size() > Config.BUFFERSIZE)
 				{
-					alreadyDeletedSamplesFromBuffer++;
 					buffer.remove(0);
 				}
 			}
@@ -166,21 +167,12 @@ public class StreamBuffer {
 	{
 		return buffer.size()-1;
 	}
-	
-	/**
-	 * Diese Methode gibt zurück, wie viele Samples bereits aus dem Buffer gelöscht wurden.
-	 * @return Anzahl an gelöschten Samples aus dem Buffer
-	 */
-	public int getAlreadyDeletedSamplesFromBuffer()
-	{
-		return alreadyDeletedSamplesFromBuffer;
-	}
-	
-	/**
+
+    /**
 	 * Diese Methode gibt die Zeitdifferenz der Satzauswertung zurück
 	 * @return Zeitdifferenz
 	 */
-	public long gettZeitDiff()
+	public long getZeitDiff()
 	{
 		return diff;
 	}

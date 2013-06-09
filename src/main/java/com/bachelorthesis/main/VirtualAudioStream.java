@@ -1,5 +1,7 @@
-/**
- * Diese Klasse simuliert einen Audiostream aus einer vollständigen Sounddatei
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:01 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
@@ -13,20 +15,14 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+/**
+ * Diese Klasse simuliert einen Audiostream aus einer vollständigen Sounddatei
+ */
 public class VirtualAudioStream {
-	
-	private int channels;
-	private int bytesPerSample;
-	private int bytesPerFrame;
-	private int samplesPerFrame;
-	private long sampleLength;
-	private float sampleRate;
-	private long frameLength;
-	private AudioPreProcessor prepro; 
-	
-	private int lastEnd;
-	
+
+    private long sampleLength;
+    private long frameLength;
+    private int lastEnd;
 	private double[] fullStream;
 	
 	public VirtualAudioStream(String u, int windowSize, boolean readComplete) throws UnsupportedAudioFileException, IOException {
@@ -34,13 +30,13 @@ public class VirtualAudioStream {
 		URL url = new URL("file://"+u);
 		audioInputStream = AudioSystem.getAudioInputStream(url);
 		frameLength = audioInputStream.getFrameLength();
-		channels = audioInputStream.getFormat().getChannels();
-		bytesPerSample = audioInputStream.getFormat().getSampleSizeInBits() / 8;
-		bytesPerFrame = audioInputStream.getFormat().getFrameSize();
-        samplesPerFrame = bytesPerFrame / bytesPerSample;
+        int channels = audioInputStream.getFormat().getChannels();
+        int bytesPerSample = audioInputStream.getFormat().getSampleSizeInBits() / 8;
+        int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
+        int samplesPerFrame = bytesPerFrame / bytesPerSample;
 		sampleLength = (frameLength / channels) * samplesPerFrame;
-		sampleRate = audioInputStream.getFormat().getSampleRate();
-		prepro = new AudioPreProcessor(audioInputStream, sampleRate);
+        float sampleRate = audioInputStream.getFormat().getSampleRate();
+        AudioPreProcessor prepro = new AudioPreProcessor(audioInputStream, sampleRate);
 		lastEnd = 0;
 
 		// Verhalten, wenn die komplette Sounddatei gelesen werden soll

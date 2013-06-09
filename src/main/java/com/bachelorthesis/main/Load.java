@@ -1,7 +1,7 @@
-/**
- * Diese Klasse liest die XML-Datei ein und stellt die Referenzdaten daraus zur Verfügung.
- * Außerdem kann eine Textdatei mit der Zuordnung des Dateinamens zum gesprochenen Input
- * (sowohl für die Referenzdaten als auch für die Analysedaten) eingelesen werden.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:09 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.main;
@@ -20,7 +20,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import com.bachelorthesis.infrastructure.ReadXML;
 import org.xml.sax.SAXException;
 
-
+/**
+ * Diese Klasse liest die XML-Datei ein und stellt die Referenzdaten daraus zur Verfügung.
+ * Außerdem kann eine Textdatei mit der Zuordnung des Dateinamens zum gesprochenen Input
+ * (sowohl für die Referenzdaten als auch für die Analysedaten) eingelesen werden.
+ */
 public class Load {
 	
 	private Map<String,Vector<double[]>> referenzdaten;
@@ -53,9 +57,9 @@ public class Load {
 	    	{
 	    		//Die Zeile wird nach dem ";" aufgesplittet. Davor steht der Name des Mitarbeiters, dahinter der Ordner
 	    		//Achtung: Wir gehen hier davon aus, dass die Namen immer in der gleichen Schreibweise wie im Wochenbericht auftauchen
-		    	String[] savety = string.split(";");
-		    	String dateiname = savety[0].trim();
-		    	String content = savety[1].trim();
+		    	String[] splitted = string.split(";");
+		    	String dateiname = splitted[0].trim();
+		    	String content = splitted[1].trim();
 		    	//Zuordnung wird intern gespeichert.
 		    	contentfolder.put(dateiname, content);
 	    	}else{ //Ende des Dokuments erreicht

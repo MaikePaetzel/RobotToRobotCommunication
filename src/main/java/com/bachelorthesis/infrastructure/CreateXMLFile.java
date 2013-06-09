@@ -1,6 +1,7 @@
-/**
- * Mit Hilfe dieser Klasse lässt sich unter Angabe eines Pfades zu einem Ordner
- * mit Referenzdaten eine XML-Datei erzeugen.
+/*
+ * Created by Maike Paetzel, Natural Language Systems Division, Hamburg University, 6/7/13 11:13 PM.
+ * This code is licensed under CC BY-NC-SA 3.0 DE
+ * This code uses parts from http://mirlastfm.googlecode.com/svn/trunk/ which was licensed under Creative Commons
  */
 
 package com.bachelorthesis.infrastructure;
@@ -17,10 +18,14 @@ import org.xml.sax.SAXException;
 
 import com.bachelorthesis.main.StartUpFilePathConfiguration;
 
+/**
+ * Mit Hilfe dieser Klasse lässt sich unter Angabe eines Pfades zu einem Ordner
+ * mit Referenzdaten eine XML-Datei erzeugen.
+ */
 public class CreateXMLFile {
 	
-	public Map<String,Vector<double[]>> referenzen;
-	WriteXML xml;
+	private Map<String,Vector<double[]>> referenzen;
+	private WriteXML xml;
 	
 	/**
 	 * Mainmethode. Parameter sind zuerst der Pfad zum Referenzdatenordner und dann der Dateiname
